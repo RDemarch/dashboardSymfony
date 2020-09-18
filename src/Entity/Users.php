@@ -3,140 +3,335 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Users
+ *
+ * @ORM\Table(name="USERS")
  * @ORM\Entity(repositoryClass=UsersRepository::class)
+ * @ORM\Entity
+ * @UniqueEntity(fields={"usMail"}, message="There is already an account with this usMail")
  */
-class Users
+class Users implements UserInterface
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="US_ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private $usId;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string|null
+     *
+     * @ORM\Column(name="US_PRENOM", type="string", length=50, nullable=true)
      */
-    private $name;
+    private $usPrenom;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string|null
+     *
+     * @ORM\Column(name="US_NOM", type="string", length=50, nullable=true)
      */
-    private $login;
+    private $usNom;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string|null
+     *
+     * @ORM\Column(name="US_MAIL", type="string", length=100, nullable=true)
      */
-    private $password;
+    private $usMail;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string|null
+     *
+     * @ORM\Column(name="US_PASS", type="string", length=50, nullable=true)
      */
-    private $email;
+    private $usPass;
 
     /**
-     * @ORM\Column(type="text")
+     * @var int|null
+     *
+     * @ORM\Column(name="US_NIVEAU", type="integer", nullable=true)
      */
-    private $firstname;
+    private $usNiveau;
 
     /**
-     * @ORM\Column(type="text")
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="INS_DATE", type="datetime", nullable=true)
      */
-    private $location;
+    private $insDate;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var string|null
+     *
+     * @ORM\Column(name="INS_USER", type="string", length=100, nullable=true)
      */
-    private $postalCode;
+    private $insUser;
 
-    public function getId(): ?int
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="MAJ_DATE", type="datetime", nullable=true)
+     */
+    private $majDate;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="MAJ_USER", type="string", length=100, nullable=true)
+     */
+    private $majUser;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
+    /**
+     * @return int
+     */
+    public function getUsId(): int
     {
-        return $this->id;
+        return $this->usId;
     }
 
-    public function getName(): ?string
+    /**
+     * @param int $usId
+     */
+    public function setUsId(int $usId): void
     {
-        return $this->name;
+        $this->usId = $usId;
     }
 
-    public function setName(string $name): self
+    /**
+     * @return string|null
+     */
+    public function getUsPrenom(): ?string
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->usPrenom;
     }
 
-    public function getLogin(): ?string
+    /**
+     * @param string|null $usPrenom
+     */
+    public function setUsPrenom(?string $usPrenom): void
     {
-        return $this->login;
+        $this->usPrenom = $usPrenom;
     }
 
-    public function setLogin(string $login): self
+    /**
+     * @return string|null
+     */
+    public function getUsNom(): ?string
     {
-        $this->login = $login;
-
-        return $this;
+        return $this->usNom;
     }
 
-    public function getPassword(): ?string
+    /**
+     * @param string|null $usNom
+     */
+    public function setUsNom(?string $usNom): void
     {
-        return $this->password;
+        $this->usNom = $usNom;
     }
 
-    public function setPassword(string $password): self
+    /**
+     * @return string|null
+     */
+    public function getUsMail(): ?string
     {
-        $this->password = $password;
-
-        return $this;
+        return $this->usMail;
     }
 
-    public function getEmail(): ?string
+    /**
+     * @param string|null $usMail
+     */
+    public function setUsMail(?string $usMail): void
     {
-        return $this->email;
+        $this->usMail = $usMail;
     }
 
-    public function setEmail(string $email): self
+    /**
+     * @return string|null
+     */
+    public function getUsPass(): ?string
     {
-        $this->email = $email;
-
-        return $this;
+        return $this->usPass;
     }
 
-    public function getFirstname(): ?string
+    /**
+     * @param string|null $usPass
+     */
+    public function setUsPass(?string $usPass): void
     {
-        return $this->firstname;
+        $this->usPass = $usPass;
     }
 
-    public function setFirstname(string $firstname): self
+    /**
+     * @return int|null
+     */
+    public function getUsNiveau(): ?int
     {
-        $this->firstname = $firstname;
-
-        return $this;
+        return $this->usNiveau;
     }
 
-    public function getLocation(): ?string
+    /**
+     * @param int|null $usNiveau
+     */
+    public function setUsNiveau(?int $usNiveau): void
     {
-        return $this->location;
+        $this->usNiveau = $usNiveau;
     }
 
-    public function setLocation(string $location): self
+    /**
+     * @return \DateTime|null
+     */
+    public function getInsDate(): ?\DateTime
     {
-        $this->location = $location;
-
-        return $this;
+        return $this->insDate;
     }
 
-    public function getPostalCode(): ?int
+    /**
+     * @param \DateTime|null $insDate
+     */
+    public function setInsDate(?\DateTime $insDate): void
     {
-        return $this->postalCode;
+        $this->insDate = $insDate;
     }
 
-    public function setPostalCode(int $postalCode): self
+    /**
+     * @return string|null
+     */
+    public function getInsUser(): ?string
     {
-        $this->postalCode = $postalCode;
+        return $this->insUser;
+    }
+
+    /**
+     * @param string|null $insUser
+     */
+    public function setInsUser(?string $insUser): void
+    {
+        $this->insUser = $insUser;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getMajDate(): ?\DateTime
+    {
+        return $this->majDate;
+    }
+
+    /**
+     * @param \DateTime|null $majDate
+     */
+    public function setMajDate(?\DateTime $majDate): void
+    {
+        $this->majDate = $majDate;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMajUser(): ?string
+    {
+        return $this->majUser;
+    }
+
+    /**
+     * @param string|null $majUser
+     */
+    public function setMajUser(?string $majUser): void
+    {
+        $this->majUser = $majUser;
+    }
+
+
+
+
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return ['ROLE_USER'];
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return $this->getUsPass();
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+
+        return $this->getUsMail();
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
