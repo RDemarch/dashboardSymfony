@@ -42,6 +42,11 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('usName')
+            ->add('usFirstname')
+            ->add('usLogin')
+            ->add('usLocation')
+            ->add('usPostalCode')
         ;
     }
 

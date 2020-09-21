@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UsersRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,79 +21,65 @@ class Users implements UserInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="US_ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $usId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="US_PRENOM", type="string", length=50, nullable=true)
+     * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
-    private $usPrenom;
+    private $usName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="US_NOM", type="string", length=50, nullable=true)
+     * @ORM\Column(name="firstname", type="string", length=50, nullable=true)
      */
-    private $usNom;
+    private $usFirstname;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="US_MAIL", type="string", length=100, nullable=true)
+     * @ORM\Column(name="email", type="string", length=100, nullable=true)
      */
     private $usMail;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="US_PASS", type="string", length=50, nullable=true)
+     * @ORM\Column(name="password", type="string", length=50, nullable=true)
      */
-    private $usPass;
+    private $usPassword;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="location", type="string", nullable=true)
+     */
+    private $usLocation;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="US_NIVEAU", type="integer", nullable=true)
+     * @ORM\Column(name="postal_code", type="integer", nullable=true)
      */
-    private $usNiveau;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="INS_DATE", type="datetime", nullable=true)
-     */
-    private $insDate;
+    private $usPostalCode;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="INS_USER", type="string", length=100, nullable=true)
+     * @ORM\Column(name="login", type="string", length=100, nullable=true)
      */
-    private $insUser;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="MAJ_DATE", type="datetime", nullable=true)
-     */
-    private $majDate;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="MAJ_USER", type="string", length=100, nullable=true)
-     */
-    private $majUser;
+    private $usLogin;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isVerified = false;
+    private $usIsVerified = false;
 
     /**
      * @return int
@@ -113,33 +100,33 @@ class Users implements UserInterface
     /**
      * @return string|null
      */
-    public function getUsPrenom(): ?string
+    public function getUsFirstname(): ?string
     {
-        return $this->usPrenom;
+        return $this->usFirstname;
     }
 
     /**
-     * @param string|null $usPrenom
+     * @param string|null $usFirstname
      */
-    public function setUsPrenom(?string $usPrenom): void
+    public function setUsFirstname(?string $usFirstname): void
     {
-        $this->usPrenom = $usPrenom;
+        $this->usFirstname = $usFirstname;
     }
 
     /**
      * @return string|null
      */
-    public function getUsNom(): ?string
+    public function getUsName(): ?string
     {
-        return $this->usNom;
+        return $this->usName;
     }
 
     /**
-     * @param string|null $usNom
+     * @param string|null $usName
      */
-    public function setUsNom(?string $usNom): void
+    public function setUsName(?string $usName): void
     {
-        $this->usNom = $usNom;
+        $this->usName = $usName;
     }
 
     /**
@@ -163,100 +150,64 @@ class Users implements UserInterface
      */
     public function getUsPass(): ?string
     {
-        return $this->usPass;
+        return $this->usPassword;
     }
 
     /**
-     * @param string|null $usPass
+     * @param string|null $usPassword
      */
-    public function setUsPass(?string $usPass): void
+    public function setUsPass(?string $usPassword): void
     {
-        $this->usPass = $usPass;
+        $this->usPassword = $usPassword;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUsLocation(): ?string
+    {
+        return $this->usLocation;
+    }
+
+    /**
+     * @param string|null $usLocation
+     */
+    public function setUsLocation(?string $usLocation): void
+    {
+        $this->usLocation = $usLocation;
     }
 
     /**
      * @return int|null
      */
-    public function getUsNiveau(): ?int
+    public function getUsPostalCode(): ?string
     {
-        return $this->usNiveau;
+        return $this->usPostalCode;
     }
 
     /**
-     * @param int|null $usNiveau
+     * @param int|null $usPostalCode
      */
-    public function setUsNiveau(?int $usNiveau): void
+    public function setUsPostalCode(?int $usPostalCode): void
     {
-        $this->usNiveau = $usNiveau;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getInsDate(): ?\DateTime
-    {
-        return $this->insDate;
-    }
-
-    /**
-     * @param \DateTime|null $insDate
-     */
-    public function setInsDate(?\DateTime $insDate): void
-    {
-        $this->insDate = $insDate;
+        $this->usPostalCode = $usPostalCode;
     }
 
     /**
      * @return string|null
      */
-    public function getInsUser(): ?string
+    public function getUsLogin(): ?string
     {
-        return $this->insUser;
+        return $this->usLogin;
     }
 
     /**
-     * @param string|null $insUser
+     * @param string|null $usLogin
      */
-    public function setInsUser(?string $insUser): void
+    public function setUsLogin(?string $usLogin): void
     {
-        $this->insUser = $insUser;
+        $this->usLogin = $usLogin;
     }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getMajDate(): ?\DateTime
-    {
-        return $this->majDate;
-    }
-
-    /**
-     * @param \DateTime|null $majDate
-     */
-    public function setMajDate(?\DateTime $majDate): void
-    {
-        $this->majDate = $majDate;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getMajUser(): ?string
-    {
-        return $this->majUser;
-    }
-
-    /**
-     * @param string|null $majUser
-     */
-    public function setMajUser(?string $majUser): void
-    {
-        $this->majUser = $majUser;
-    }
-
-
-
-
 
     /**
      * Returns the roles granted to the user.
@@ -310,7 +261,7 @@ class Users implements UserInterface
     public function getUsername()
     {
 
-        return $this->getUsMail();
+        return $this->getUsLogin();
     }
 
     /**
