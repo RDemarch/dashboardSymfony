@@ -25,6 +25,7 @@
                 <td>{{ crud.price }}</td>
                 <td>
                     <a href="{{ path('crud_show', {'id': crud.id}) }}">show</a>
+                    <a href="{{ path('crud_edit', {'id': crud.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -34,4 +35,6 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <a href="{{ path('crud_new') }}">Create new</a>
 {% endblock %}

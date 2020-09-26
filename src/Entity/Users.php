@@ -82,6 +82,27 @@ class Users implements UserInterface
     private $usIsVerified = false;
 
     /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    public function getRoles(): array
+    {
+        return array_unique(array_merge(['ROLE_USER'], $this->roles));
+    }
+
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function resetRoles()
+    {
+        $this->roles = [];
+    }
+
+
+    /**
      * @return int
      */
     public function getUsId(): int
@@ -207,25 +228,6 @@ class Users implements UserInterface
     public function setUsLogin(?string $usLogin): void
     {
         $this->usLogin = $usLogin;
-    }
-
-    /**
-     * Returns the roles granted to the user.
-     *
-     *     public function getRoles()
-     *     {
-     *         return ['ROLE_USER'];
-     *     }
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return (Role|string)[] The user roles
-     */
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
     }
 
     /**

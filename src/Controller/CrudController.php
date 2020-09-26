@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/crud")
+ * @Route("/products")
  */
 class CrudController extends AbstractController
 {
@@ -24,6 +24,18 @@ class CrudController extends AbstractController
             'cruds' => $crudRepository->findAll(),
         ]);
     }
+
+    /**
+     * @Route("/admin", name="crud_admin", methods={"GET"})
+     */
+    public function admin(CrudRepository $crudRepository): Response
+    {
+        return $this->render('crud/admin.html.twig', [
+            'cruds' => $crudRepository->findAll(),
+        ]);
+    }
+
+
 
     /**
      * @Route("/new", name="crud_new", methods={"GET","POST"})
@@ -59,6 +71,16 @@ class CrudController extends AbstractController
     }
 
     /**
+     * @Route("/admin/{id}", name="crud_show_admin", methods={"GET"})
+     */
+    public function showAdmin(Crud $crud): Response
+    {
+        return $this->render('crud/show.admin.html.twig', [
+            'crud' => $crud,
+        ]);
+    }
+
+    /**
      * @Route("/{id}/edit", name="crud_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Crud $crud): Response
@@ -89,6 +111,6 @@ class CrudController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('crud_index');
+        return $this->redirectToRoute('crud_admin');
     }
 }

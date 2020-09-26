@@ -169,7 +169,7 @@ class Crud
     public function endWarantyDateToString(): ?string
     {
         if ($this->endWarantyDate instanceof \DateTime) {
-          $newEndWarantyDate = $this->endWarantyDate->format('Y-m-d');
+          $strEndWarantyDate = $this->endWarantyDate->format('Y-m-d');
         }
         return $strEndWarantyDate;
     }
