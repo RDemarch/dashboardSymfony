@@ -10,16 +10,19 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Description</th>
-                <th>actions</th>
+                <th>Credential</th>
+                <th>Category</th>
+                <th>Price</th>
             </tr>
         </thead>
         <tbody>
         {% for crud in cruds %}
             <tr>
                 <td>{{ crud.id }}</td>
-                <td>{{ crud.Name }}</td>
-                <td>{{ crud.Description }}</td>
+                <td>{{ crud.name }}</td>
+                <td>{{ crud.credential }}</td>
+                <td>{{ crud.category }}</td>
+                <td>{{ crud.price }}</td>
                 <td>
                     <a href="{{ path('crud_show', {'id': crud.id}) }}">show</a>
                     <a href="{{ path('crud_edit', {'id': crud.id}) }}">edit</a>

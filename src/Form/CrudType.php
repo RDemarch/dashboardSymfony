@@ -12,8 +12,14 @@ class CrudType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name')
-            ->add('Description')
+            ->add('name')
+            ->add('credential')
+            ->add('category')
+            ->add('buyingDate')
+            ->add('endWarantyDate')
+            ->add('maintenanceAdvice')
+            ->add('userManual')
+            ->add('price')
         ;
     }
 
