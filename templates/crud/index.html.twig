@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crud index{% endblock %}
+
+{% block body %}
+    <h1>Crud index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Credential</th>
+                <th>Category</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for crud in cruds %}
+            <tr>
+                <td>{{ crud.id }}</td>
+                <td>{{ crud.name }}</td>
+                <td>{{ crud.credential }}</td>
+                <td>{{ crud.category }}</td>
+                <td>{{ crud.price }}</td>
+                <td>
+                    <a href="{{ path('crud_show', {'id': crud.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
